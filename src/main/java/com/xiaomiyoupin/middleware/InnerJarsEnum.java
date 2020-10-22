@@ -16,10 +16,13 @@ public enum InnerJarsEnum {
                     }
             );
 
+    /*Jar包名称*/
     private String jarName;
 
+    /*Jar包的入口类，类加载器加载jar包 加载的第一个类*/
     private String mainClass;
 
+    /*Jar包自己 的路径  和 依赖的路径*/
     private String[] dependcyUrls;
 
     InnerJarsEnum(String jarName, String mainClass, String[] dependcyUrls) {

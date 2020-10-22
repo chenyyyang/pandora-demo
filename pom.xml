@@ -21,6 +21,8 @@
     </build>
 
     <dependencies>
+        <!--http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
+        点击下载后改一下名字即可..改成middleware-demo-1.0-SNAPSHOT.jar.-->
         <dependency>
             <groupId>com.xiaomiyoupin</groupId>
             <artifactId>middleware-demo</artifactId>

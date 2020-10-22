@@ -52,6 +52,6 @@ public class TestPandora {
         IHelloWorld proxy = (IHelloWorld) DynamicProxy.getProxy(object);
         System.out.println(proxy.echo("yes"));
 
-
+        
     }
 }

@@ -1,7 +1,5 @@
 package com.xiaomiyoupin.middleware;
 
-import com.xiaomiyoupin.IHelloWorld;
-
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,15 +9,17 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class PandoraApplicationContext {
 
-    /*全局持有所有classloader*/
+    /*mainClass 表示一个Jar包的启动类*/
+    /*全局持有所有classloader   key 是 mainClass名字  value是对应的classloader*/
     private static volatile ConcurrentHashMap<String, URLClassLoader> classLoaderHolder = new ConcurrentHashMap<String, URLClassLoader>();
 
-    /*全局持有所有对象*/
+    /*全局持有所有Class和 对应的对象*/
     private static volatile ConcurrentHashMap<Class, Object> singletonObjetcs = new ConcurrentHashMap<Class, Object>();
 
-    /*全局持有 类被 自定义加载器和 JarLauncher分别加载的class*/
+    /*key是 类被 system classloader 和 JarLauncher分别加载的class*/
     private static volatile ConcurrentHashMap<Class, Class> classConverter = new ConcurrentHashMap();
 
+    /*key 是 mainClass名字  value是mainClass的Class*/
     private static volatile ConcurrentHashMap<String, Class> mainClassLoaderHolder = new ConcurrentHashMap<String, Class>();
 
     public static void run() {
