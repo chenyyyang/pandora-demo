@@ -25,6 +25,7 @@ public class HelloWorldProxy implements IHelloWorld {
             String method = Thread.currentThread() .getStackTrace()[1].getMethodName();
             m = mainClass.getDeclaredMethod(method, String.class);
             return (String) m.invoke(object, new Object[] {s});
+
         } catch (NoSuchMethodException e) {
         } catch (IllegalAccessException e) {
             e.printStackTrace();

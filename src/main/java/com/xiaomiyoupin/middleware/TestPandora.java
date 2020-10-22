@@ -41,9 +41,7 @@ public class TestPandora {
         System.out.println("类加载器是：" + mainClass.getClassLoader());
         Method m = mainClass.getDeclaredMethod("echo",String.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
-//        System.out.println("类加载器是：" + object.echo("hello"));
-//        String test = object.echo("测试一下");
-//        System.out.println("测试输出：" + test);
+
 
         //这里成功了，所以思路还是用代理
         HelloWorldProxy helloWorldProxy = new HelloWorldProxy();
@@ -54,6 +52,8 @@ public class TestPandora {
         System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
         IHelloWorld helloWorld = (IHelloWorld) helloWorldObj;
         System.out.println(helloWorld.echo("yes"));
+
+
         //TODO  调试使用JDK动态代理   失败....
         IHelloWorld proxy = (IHelloWorld) DynamicProxy.getProxy(object);
         System.out.println(proxy.echo("yes"));
