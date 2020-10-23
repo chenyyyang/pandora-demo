@@ -58,6 +58,8 @@ public class TestPandora {
         IHelloWorld proxy = (IHelloWorld) DynamicProxy.getProxy(object);
         System.out.println(proxy.echo("yes"));
 
+        //TODO  使用rpc方式 http://localhost:8080/middleware/HelloWorld/echo?params=hah;  m.invoke(object, new Object[] {s})反射执行。
+        //https://www.coder.work/article/6385901
 
     }
 }
