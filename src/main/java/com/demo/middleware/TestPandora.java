@@ -1,9 +1,9 @@
-package com.xiaomiyoupin.middleware;
+package com.demo.middleware;
 
+import com.demo.middleware.proxy.HelloWorldProxy;
 import com.xiaomiyoupin.HelloWorld;
 import com.xiaomiyoupin.IHelloWorld;
-import com.xiaomiyoupin.middleware.proxy.DynamicProxy;
-import com.xiaomiyoupin.middleware.proxy.HelloWorldProxy;
+import com.demo.middleware.proxy.DynamicProxy;
 
 import java.lang.reflect.Method;
 

@@ -1,4 +1,4 @@
-package com.xiaomiyoupin.middleware;
+package com.demo.middleware;
 
 import java.net.URL;
 import java.net.URLClassLoader;

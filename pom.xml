@@ -13,8 +13,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>6</source>
-                    <target>6</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -22,11 +22,13 @@
 
     <dependencies>
         <!--http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
-        点击下载后改一下名字即可..改成middleware-demo-1.0-SNAPSHOT.jar.-->
+        点击下载后改一下名字即可..然后放到systemPath参数上-->
         <dependency>
             <groupId>com.xiaomiyoupin</groupId>
             <artifactId>middleware-demo</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>Users/chen/Downloads/middleware-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

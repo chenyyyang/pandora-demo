@@ -1,4 +1,4 @@
-package com.xiaomiyoupin.middleware;
+package com.demo.middleware;
 
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,26 +31,19 @@ public class PandoraApplicationContext {
             JarLauncher jarLauncher = JarLauncherFactory.getJarLauncher(innerJarsEnum);
             classLoaderHolder.put(innerJarsEnum.getJarName(), jarLauncher);
         }
-        //初始化对象容器
+        //加载Class
         for (InnerJarsEnum innerJarsEnum : innerJarsEnums) {
             String mainClass = innerJarsEnum.getMainClass();
+            //拿到对应的classloader
             URLClassLoader classLoader = classLoaderHolder.get(innerJarsEnum.getJarName());
             try {
                 Class<?> clazz = classLoader.loadClass(mainClass);
-                Object obj = clazz.newInstance();
                 {
-                    singletonObjetcs.put(clazz, obj);
                     mainClassLoaderHolder.put(mainClass, clazz);
                     classConverter.put(ClassLoader.getSystemClassLoader().loadClass(mainClass), clazz);
-                    //添加方法
-
                 }
             } catch (ClassNotFoundException e) {
-                System.err.println("[mainClass_initError]-" + innerJarsEnum.getJarName());
-            } catch (IllegalAccessException e) {
-                System.err.println("[Object_initError]-" + innerJarsEnum.getJarName());
-            } catch (InstantiationException e) {
-                System.err.println("[Object_initError]-" + innerJarsEnum.getJarName());
+                System.err.println("[mainClass_loadError]-" + innerJarsEnum.getJarName());
             }
         }
     }
@@ -67,16 +60,14 @@ public class PandoraApplicationContext {
         return mainClassLoaderHolder.get(_enum.getMainClass());
     }
 
-    public static <T> T getObject(Class<T> clz) {
-        //clz默认是 systemClassloader来加载的 ，所以正常获取不到
-        Object obj = singletonObjetcs.get(clz);
-        if (null == obj) {
-            //classConverter中key是 systemClassloader加载的类， vlaue是JarLauncher加载的Class
-            Class _fake = classConverter.get(clz);
-            //这里拿到自定义的class的对象
-            return (T) singletonObjetcs.get(_fake);
+    public static <T> T getObject(Class<T> clz) throws Exception{
+        //classConverter中key是 systemClassloader加载的类， vlaue是JarLauncher加载的Class
+        //这里拿到自定义的class的对象
+        Class orginClass = classConverter.get(clz);
+        if (orginClass == null) {
+            return null;
         }
-        return (T) obj;
+        return (T) orginClass.newInstance();
     }
 
 }
