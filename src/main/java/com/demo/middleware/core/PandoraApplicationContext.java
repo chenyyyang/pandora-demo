@@ -1,4 +1,6 @@
-package com.demo.middleware;
+package com.demo.middleware.core;
+
+import com.demo.middleware.InnerJarsEnum;
 
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,5 +1,6 @@
 package com.demo.middleware;
 
+import com.demo.middleware.core.PandoraApplicationContext;
 import com.demo.middleware.proxy.HelloWorldProxy;
 import com.xiaomiyoupin.HelloWorld;
 import com.xiaomiyoupin.IHelloWorld;
@@ -31,7 +32,7 @@ public class TestPandora {
         */
         PandoraApplicationContext.run();
 
-        //TODO Thread.currentThread().setContextClassLoader(cacheClass.getClassLoader());
+        //TODO 测试Thread.currentThread().setContextClassLoader(cacheClass.getClassLoader());
 //        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
 //        PandoraApplicationContext.doSetEnvironment(InnerJarsEnum.MIDDLEWARE_DEMO);
 //        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
@@ -43,23 +44,22 @@ public class TestPandora {
         Object object = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
-        //这里成功了，所以思路还是用代理，来避免每个方法都用反射
-        HelloWorldProxy helloWorldProxy = new HelloWorldProxy();
+        //这里成功了，打算用代理模式，来避免每个方法都用反射
+        HelloWorldProxy helloWorldProxy = new HelloWorldProxy(mainClass);
         System.out.println("测试输出："+helloWorldProxy.echo("hello"));
 
-        //TODO  这里调试失败
+        //TODO  尝试通过接口来强引用 对象。。调试失败
         Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
         IHelloWorld helloWorld = (IHelloWorld) helloWorldObj;
         System.out.println(helloWorld.echo("yes"));
 
-
-        //TODO  调试使用JDK动态代理   失败....
+        //TODO  尝试使用JDK动态代理   失败....
         IHelloWorld proxy = (IHelloWorld) DynamicProxy.getProxy(object);
         System.out.println(proxy.echo("yes"));
 
         //TODO  使用rpc方式 http://localhost:8080/middleware/HelloWorld/echo?params=hah;  m.invoke(object, new Object[] {s})反射执行。
         //https://www.coder.work/article/6385901
-
     }
+
 }

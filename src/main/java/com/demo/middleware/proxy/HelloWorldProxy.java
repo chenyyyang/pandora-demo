@@ -1,9 +1,8 @@
 package com.demo.middleware.proxy;
 
-import com.xiaomiyoupin.HelloWorld;
 import com.xiaomiyoupin.IHelloWorld;
 import com.demo.middleware.InnerJarsEnum;
-import com.demo.middleware.PandoraApplicationContext;
+import com.demo.middleware.core.PandoraApplicationContext;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -14,14 +13,18 @@ import java.lang.reflect.Method;
  */
 public class HelloWorldProxy implements IHelloWorld {
 
-    Class mainClass = PandoraApplicationContext.getMainClass(InnerJarsEnum.MIDDLEWARE_DEMO);
+    private Class mainClass = null;
+
+    public HelloWorldProxy(Class mainClass) {
+        this.mainClass = mainClass;
+    }
 
     @Override
     public String echo(String s) {
         Method m = null;
         try {
             //获取当前方法名称
-            String method = Thread.currentThread() .getStackTrace()[1].getMethodName();
+            String method = Thread.currentThread().getStackTrace()[1].getMethodName();
             m = mainClass.getDeclaredMethod(method, String.class);
             return (String) m.invoke(mainClass.newInstance(), new Object[] {s});
 

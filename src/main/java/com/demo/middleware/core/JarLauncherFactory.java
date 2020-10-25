@@ -1,4 +1,6 @@
-package com.demo.middleware;
+package com.demo.middleware.core;
+
+import com.demo.middleware.InnerJarsEnum;
 
 import java.net.MalformedURLException;
 import java.net.URL;
