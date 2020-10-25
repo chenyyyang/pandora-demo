@@ -65,14 +65,20 @@ public class PandoraApplicationContext {
         return mainClassLoaderHolder.get(_enum.getMainClass());
     }
 
-    public static <T> T getObject(Class<T> clz) throws Exception{
+    public static synchronized <T> T getObject(Class<T> clz) throws Exception {
+        if (singletonObjetcs.get(clz) != null) {
+            return (T) singletonObjetcs.get(clz);
+        }
         //classConverter中key是 systemClassloader加载的类， vlaue是JarLauncher加载的Class
         //这里拿到自定义的class的对象
         Class orginClass = classConverter.get(clz);
         if (orginClass == null) {
             return null;
         }
-        return (T) orginClass.newInstance();
+        Object o = orginClass.newInstance();
+        singletonObjetcs.put(clz, o);
+        return (T) o;
+
     }
 
 }

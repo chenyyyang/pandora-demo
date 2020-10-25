@@ -1,10 +1,10 @@
 package com.demo.middleware;
 
 import com.demo.middleware.core.PandoraApplicationContext;
-import com.demo.middleware.proxy.HelloWorldProxy;
+import com.demo.middleware.decorator.HelloWorldWrapper;
 import com.xiaomiyoupin.HelloWorld;
 import com.xiaomiyoupin.IHelloWorld;
-import com.demo.middleware.proxy.DynamicProxy;
+import com.demo.middleware.decorator.DynamicProxy;
 
 import java.lang.reflect.Method;
 
@@ -44,9 +44,9 @@ public class TestPandora {
         Object object = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
-        //这里成功了，打算用代理模式，来避免每个方法都用反射
-        HelloWorldProxy helloWorldProxy = new HelloWorldProxy(mainClass);
-        System.out.println("测试输出："+helloWorldProxy.echo("hello"));
+        //这里成功了，打算用装饰模式，来避免每个方法都用反射
+        HelloWorldWrapper helloWorldWrapper = new HelloWorldWrapper(mainClass);
+        System.out.println("测试输出："+ helloWorldWrapper.echo("hello"));
 
         //TODO  尝试通过接口来强引用 对象。。调试失败
         Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);

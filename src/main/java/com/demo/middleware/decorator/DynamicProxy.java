@@ -1,4 +1,4 @@
-package com.demo.middleware.proxy;
+package com.demo.middleware.decorator;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

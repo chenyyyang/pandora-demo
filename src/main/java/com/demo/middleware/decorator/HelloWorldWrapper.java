@@ -1,8 +1,6 @@
-package com.demo.middleware.proxy;
+package com.demo.middleware.decorator;
 
 import com.xiaomiyoupin.IHelloWorld;
-import com.demo.middleware.InnerJarsEnum;
-import com.demo.middleware.core.PandoraApplicationContext;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -11,11 +9,11 @@ import java.lang.reflect.Method;
  * @author wuchenyang
  * @date 2020/10/22 21:35
  */
-public class HelloWorldProxy implements IHelloWorld {
+public class HelloWorldWrapper implements IHelloWorld {
 
     private Class mainClass = null;
 
-    public HelloWorldProxy(Class mainClass) {
+    public HelloWorldWrapper(Class mainClass) {
         this.mainClass = mainClass;
     }
 

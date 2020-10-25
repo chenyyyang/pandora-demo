@@ -7,6 +7,27 @@
     <groupId>com.xiaomiyoupin.middleware</groupId>
     <artifactId>pandora-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <!--http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
+        点击下载即可..然后放到systemPath参数上-->
+        <dependency>
+            <groupId>com.xiaomiyoupin</groupId>
+            <artifactId>middleware-demo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>system</scope>
+            <optional>true</optional>
+            <systemPath>Users/chen/Downloads/middleware-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -19,16 +40,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <!--http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
-        点击下载后改一下名字即可..然后放到systemPath参数上-->
-        <dependency>
-            <groupId>com.xiaomiyoupin</groupId>
-            <artifactId>middleware-demo</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>Users/chen/Downloads/middleware-1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-    </dependencies>
 </project>
