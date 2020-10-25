@@ -25,7 +25,7 @@ public class PandoraApplicationContext {
     public static void run() {
 
         InnerJarsEnum[] innerJarsEnums = InnerJarsEnum.class.getEnumConstants();
-        //获取所有的内嵌jar
+        //获取所有的待加载的jar
         for (InnerJarsEnum innerJarsEnum : innerJarsEnums) {
             //初始化一个ClassLoader来加载,实现组件与组件之前的隔离
             JarLauncher jarLauncher = JarLauncherFactory.getJarLauncher(innerJarsEnum);
@@ -33,6 +33,7 @@ public class PandoraApplicationContext {
         }
         //加载Class
         for (InnerJarsEnum innerJarsEnum : innerJarsEnums) {
+            //TODO  自定义注解   扫描被注解的类
             String mainClass = innerJarsEnum.getMainClass();
             //拿到对应的classloader
             URLClassLoader classLoader = classLoaderHolder.get(innerJarsEnum.getJarName());
@@ -46,6 +47,7 @@ public class PandoraApplicationContext {
                 System.err.println("[mainClass_loadError]-" + innerJarsEnum.getJarName());
             }
         }
+        System.out.printf("[类加载完毕]...");
     }
 
     public static Class doSetEnvironment(InnerJarsEnum _enum) {
@@ -57,6 +59,7 @@ public class PandoraApplicationContext {
     }
 
     public static Class getMainClass(InnerJarsEnum _enum) {
+
         return mainClassLoaderHolder.get(_enum.getMainClass());
     }
 

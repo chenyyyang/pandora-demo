@@ -12,7 +12,7 @@ public class JarLauncher extends URLClassLoader {
 
     private String jarLauncherName;
 
-    private static ConcurrentHashMap<String, Class<?>> CLASS_CACHE =
+    private ConcurrentHashMap<String, Class<?>> CLASS_CACHE =
             new ConcurrentHashMap<String, Class<?>>();
 
     public JarLauncher(URL[] urls, String jarLauncherName, ClassLoader parent) {

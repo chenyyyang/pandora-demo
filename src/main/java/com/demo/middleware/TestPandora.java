@@ -31,19 +31,19 @@ public class TestPandora {
         */
         PandoraApplicationContext.run();
 
-        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
-        PandoraApplicationContext.doSetEnvironment(InnerJarsEnum.MIDDLEWARE_DEMO);
-        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
+        //TODO Thread.currentThread().setContextClassLoader(cacheClass.getClassLoader());
+//        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
+//        PandoraApplicationContext.doSetEnvironment(InnerJarsEnum.MIDDLEWARE_DEMO);
+//        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
 
-        Object object = PandoraApplicationContext.getObject(HelloWorld.class);
         Class mainClass = PandoraApplicationContext.getMainClass(InnerJarsEnum.MIDDLEWARE_DEMO);
-
         System.out.println("类加载器是：" + mainClass.getClassLoader());
         Method m = mainClass.getDeclaredMethod("echo",String.class);
+
+        Object object = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
-
-        //这里成功了，所以思路还是用代理
+        //这里成功了，所以思路还是用代理，来避免每个方法都用反射
         HelloWorldProxy helloWorldProxy = new HelloWorldProxy();
         System.out.println("测试输出："+helloWorldProxy.echo("hello"));
 
