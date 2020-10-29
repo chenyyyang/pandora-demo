@@ -93,4 +93,7 @@ public class PandoraApplicationContext {
         return cachedObject;
     }
 
+    public static ConcurrentHashMap<String, Class> getMainClassHolder() {
+        return mainClassLoaderHolder;
+    }
 }

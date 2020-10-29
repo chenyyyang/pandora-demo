@@ -27,4 +27,18 @@ pandora-demo提供了动态加载jar包的功能，
 ```
 
 然后就可以使用TestPandora跑起来了，可以debug看到，jar包加载和运行过程。
+```
+通过rpc泛化调用
+1.注册这个 PandoraRpcServer  @Bean
+    public ServletRegistrationBean middleTierServiceServlet() {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new RpcServer(), "/middleware/*");
+        servletRegistrationBean.setName("MiddleTierService");
+        Map<String, String> initParameters = new HashMap<String, String>();
+        initParameters.put("servletName", "mts");
+        servletRegistrationBean.setInitParameters(initParameters);
+        return servletRegistrationBean;
+    }
 
+2.http调用
+servlet初始化时会把，class和method加载到内存中，等待http调用
+```
