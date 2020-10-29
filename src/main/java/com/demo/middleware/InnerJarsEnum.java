@@ -1,9 +1,6 @@
 package com.demo.middleware;
 
-/**
- * @author wuchenyang
- * @date 2020/10/22 15:52
- */
+
 public enum InnerJarsEnum {
 
     MIDDLEWARE_DEMO(

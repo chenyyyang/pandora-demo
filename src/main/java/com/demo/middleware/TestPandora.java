@@ -8,10 +8,7 @@ import com.demo.middleware.decorator.DynamicProxy;
 
 import java.lang.reflect.Method;
 
-/**
- * @author wuchenyang
- * @date 2020/10/22 16:25
- */
+
 public class TestPandora {
 
     public static void main(String[] args) throws Exception {
@@ -39,10 +36,10 @@ public class TestPandora {
 
         Class mainClass = PandoraApplicationContext.getMainClass(InnerJarsEnum.MIDDLEWARE_DEMO);
         System.out.println("类加载器是：" + mainClass.getClassLoader());
-        Method m = mainClass.getDeclaredMethod("echo",String.class);
 
         //泛化调用
         Object object = PandoraApplicationContext.getObject(HelloWorld.class);
+        Method m = object.getClass().getDeclaredMethod("echo",String.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
         //这里成功了，打算用装饰模式，来避免每个方法都用反射
