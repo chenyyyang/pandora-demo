@@ -15,16 +15,23 @@
             <groupId>com.xiaomiyoupin</groupId>
             <artifactId>middleware-demo</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
             <optional>true</optional>
-            <systemPath>Users/chen/Downloads/middleware-1.0-SNAPSHOT.jar</systemPath>
+            <!--This scope is similar to provided except that you have to provide the JAR which contains it explicitly.
+            The artifact is always available and is not looked up in a repository.-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>Users/chen/Downloads/middleware-1.0-SNAPSHOT.jar</systemPath>-->
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
-            <optional>true</optional>
+            <!--https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#System_Dependencies
+            you would set the dependency on the Servlet API
+             to scope provided because the web container provides those classes.
+              A dependency with this scope is added to the classpath used for compilation and test,
+               but not the runtime classpath. It is not transitive.-->
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -41,6 +41,7 @@ public class TestPandora {
         System.out.println("类加载器是：" + mainClass.getClassLoader());
         Method m = mainClass.getDeclaredMethod("echo",String.class);
 
+        //泛化调用
         Object object = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
@@ -51,8 +52,7 @@ public class TestPandora {
         //TODO  尝试通过接口来强引用 对象。。调试失败
         Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
-        IHelloWorld helloWorld = (IHelloWorld) helloWorldObj;
-        System.out.println(helloWorld.echo("yes"));
+        HelloWorld helloWorld = (HelloWorld) helloWorldObj;
 
         //TODO  尝试使用JDK动态代理   失败....
         IHelloWorld proxy = (IHelloWorld) DynamicProxy.getProxy(object);

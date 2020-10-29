@@ -4,10 +4,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author wuchenyang
- * @date 2020/10/22 15:37
- */
+
 public class JarLauncher extends URLClassLoader {
 
     private String jarLauncherName;

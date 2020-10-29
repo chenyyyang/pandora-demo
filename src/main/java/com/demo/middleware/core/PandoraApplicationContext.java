@@ -5,10 +5,7 @@ import com.demo.middleware.InnerJarsEnum;
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author wuchenyang
- * @date 2020/10/22 15:43
- */
+
 public class PandoraApplicationContext {
 
     /*mainClass 表示一个Jar包的启动类*/
@@ -49,7 +46,7 @@ public class PandoraApplicationContext {
                 System.err.println("[mainClass_loadError]-" + innerJarsEnum.getJarName());
             }
         }
-        System.out.printf("[类加载完毕]...");
+        System.out.println("[类加载完毕]...");
     }
 
     public static Class doSetEnvironment(InnerJarsEnum _enum) {
@@ -66,19 +63,34 @@ public class PandoraApplicationContext {
     }
 
     public static synchronized <T> T getObject(Class<T> clz) throws Exception {
-        if (singletonObjetcs.get(clz) != null) {
-            return (T) singletonObjetcs.get(clz);
+        Object o;
+        //是自定义加载器加载的class
+        if (clz.getClassLoader() instanceof JarLauncher) {
+            //从单例池中取出对象
+            o = getSingletonObject(clz);
+        } else {
+            //classConverter中key是 systemClassloader加载的类， vlaue是JarLauncher加载的Class
+            //这里拿到自定义的class的对象
+            Class orginClass = classConverter.get(clz);
+            if (orginClass == null) {
+                return null;
+            }
+            o = getSingletonObject(orginClass);
         }
-        //classConverter中key是 systemClassloader加载的类， vlaue是JarLauncher加载的Class
-        //这里拿到自定义的class的对象
-        Class orginClass = classConverter.get(clz);
-        if (orginClass == null) {
-            return null;
-        }
-        Object o = orginClass.newInstance();
-        singletonObjetcs.put(clz, o);
         return (T) o;
+    }
 
+    private static Object getSingletonObject(Class clz) throws InstantiationException, IllegalAccessException {
+        Object cachedObject = null;
+        Object obj = singletonObjetcs.get(clz);
+
+        if (obj != null) {
+            cachedObject = obj;
+        } else {
+            cachedObject = clz.newInstance();
+            singletonObjetcs.put(clz, cachedObject);
+        }
+        return cachedObject;
     }
 
 }

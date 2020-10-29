@@ -5,10 +5,7 @@ import com.demo.middleware.InnerJarsEnum;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * @author wuchenyang
- * @date 2020/10/22 16:11
- */
+
 public class JarLauncherFactory {
 
     public static JarLauncher getJarLauncher(InnerJarsEnum innerJarsEnum) {

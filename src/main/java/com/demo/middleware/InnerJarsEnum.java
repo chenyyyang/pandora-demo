@@ -6,15 +6,23 @@ package com.demo.middleware;
  */
 public enum InnerJarsEnum {
 
-    MIDDLEWARE_DEMO
-            (
-                    "demoJar",
-                    "com.xiaomiyoupin.HelloWorld",
-                    new String[] {
-                            "http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar",
-                            "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"
-                    }
-            );
+    MIDDLEWARE_DEMO(
+            "demoJar",
+            "com.xiaomiyoupin.HelloWorld",
+            new String[] {
+                    "http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar",
+                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"
+            }
+    );
+
+    /*UPLOAD_SDK(
+            "uploadSDK",
+            "com.xiaomiyoupin.HelloWorld",
+            new String[] {
+                    "http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar",
+                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"
+            }
+    );*/
 
     /*Jar包名称*/
     private String jarName;
