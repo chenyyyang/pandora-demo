@@ -22,7 +22,7 @@ public class JarLauncherFactory {
             }
         }
         //  ClassLoader parent == null 所有的class都是不委托给sysytem classloader加载，都由jarLauncher加载
-        JarLauncher jarLauncher = new JarLauncher(urls ,"LoaderFor-"+JarName, null);
+        JarLauncher jarLauncher = new JarLauncher(urls ,"LoaderFor-"+JarName);
         return jarLauncher;
     }
 }

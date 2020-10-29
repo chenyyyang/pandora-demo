@@ -8,7 +8,7 @@ pandora-demo提供了动态加载jar包的功能，
 * 3.反射new 出对象，泛化调用对象的方法。
 
 
-## 各个包的解释
+### 各个包的解释
 
 | 包名               |     介绍                                                                          |
 | -------------------|---------------------------------------------------------------------------------- |
@@ -17,7 +17,7 @@ pandora-demo提供了动态加载jar包的功能，
 |rpc.http      |     通过rpc以及泛化调用来调用对象的方法                                                                     |                                                |
 | InnerJarsEnum | 存在一些示例jar包，以及jar包对应的依赖，mainClass是jar包中一个被加载的类
 
-## 安装
+
 ### 编译安装
 
 ```
@@ -42,3 +42,11 @@ pandora-demo提供了动态加载jar包的功能，
 2.http调用
 servlet初始化时会把，class和method加载到内存中，等待http调用
 ```
+
+### 资料和引用
+- [类容器隔离组件源码浅析](https://bingoex.github.io/2018/01/01/pandora/)
+- [深入理解Java虚拟机读书笔记](https://bingoex.github.io/2015/09/17/jvm-book-3-classloader/#%E6%A6%82%E8%BF%B0)
+- [Pandora Boot和spring Boot](https://blog.csdn.net/alex_xfboy/article/details/89531580)
+- [springboot启动时如何加载jar](https://cloud.tencent.com/developer/article/1619027)
+
+

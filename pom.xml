@@ -33,6 +33,13 @@
                but not the runtime classpath. It is not transitive.-->
             <scope>provided</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
     </dependencies>
 
     <build>

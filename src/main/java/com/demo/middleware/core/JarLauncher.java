@@ -12,8 +12,9 @@ public class JarLauncher extends URLClassLoader {
     private ConcurrentHashMap<String, Class<?>> CLASS_CACHE =
             new ConcurrentHashMap<String, Class<?>>();
 
-    public JarLauncher(URL[] urls, String jarLauncherName, ClassLoader parent) {
-        super(urls, parent);
+    public JarLauncher(URL[] urls, String jarLauncherName) {
+        //直接把加载请求委派给启动类加载器，则设置为null
+        super(urls, null);
         this.jarLauncherName = jarLauncherName;
     }
 

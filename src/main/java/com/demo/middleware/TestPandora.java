@@ -1,13 +1,14 @@
 package com.demo.middleware;
 
 import com.demo.middleware.core.PandoraApplicationContext;
+import com.demo.middleware.decorator.CglibProxy;
+import com.demo.middleware.decorator.DynamicProxy;
 import com.demo.middleware.decorator.HelloWorldWrapper;
 import com.xiaomiyoupin.HelloWorld;
 import com.xiaomiyoupin.IHelloWorld;
-import com.demo.middleware.decorator.DynamicProxy;
 
 import java.lang.reflect.Method;
-
+import java.util.concurrent.CountDownLatch;
 
 public class TestPandora {
 
@@ -29,22 +30,24 @@ public class TestPandora {
         */
         PandoraApplicationContext.run();
 
-        //TODO 测试Thread.currentThread().setContextClassLoader(cacheClass.getClassLoader());
-//        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
-//        PandoraApplicationContext.doSetEnvironment(InnerJarsEnum.MIDDLEWARE_DEMO);
-//        System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
+        cases(false);
+
+    }
+
+    private static void cases(boolean flag) throws Exception {
 
         Class mainClass = PandoraApplicationContext.getMainClass(InnerJarsEnum.MIDDLEWARE_DEMO);
         System.out.println("类加载器是：" + mainClass.getClassLoader());
 
         //泛化调用
         Object object = PandoraApplicationContext.getObject(HelloWorld.class);
-        Method m = object.getClass().getDeclaredMethod("echo",String.class);
+        Method m = object.getClass().getDeclaredMethod("echo", String.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
         //这里成功了，打算用装饰模式，来避免每个方法都用反射
         HelloWorldWrapper helloWorldWrapper = new HelloWorldWrapper(mainClass);
         System.out.println("测试输出："+ helloWorldWrapper.echo("hello"));
+
 
         //TODO  尝试通过接口来强引用 对象。。调试失败
         Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
@@ -57,6 +60,25 @@ public class TestPandora {
 
         //TODO  使用rpc方式 http://localhost:8080/middleware/HelloWorld/echo?params=hah;  m.invoke(object, new Object[] {s})反射执行。
         //https://www.coder.work/article/6385901
+
+        /*if (flag == false) {
+            //TODO 测试Thread.currentThread().setContextClassLoader(cacheClass.getClassLoader());
+            System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
+            PandoraApplicationContext.doSetEnvironment(InnerJarsEnum.MIDDLEWARE_DEMO);
+            System.out.println("当前类加载器是：" + Thread.currentThread().getContextClassLoader());
+
+            Thread thread = new Thread(() -> {
+                try {
+                    cases(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            });
+            thread.setContextClassLoader(Thread.currentThread().getContextClassLoader());
+            thread.start();
+            new CountDownLatch(1).await();
+        }*/
     }
 
 }

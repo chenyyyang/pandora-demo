@@ -5,10 +5,6 @@ import com.xiaomiyoupin.IHelloWorld;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
- * @author wuchenyang
- * @date 2020/10/22 21:35
- */
 public class HelloWorldWrapper implements IHelloWorld {
 
     private Class mainClass = null;
