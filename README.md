@@ -24,11 +24,11 @@ public class HelloWorld implements IHelloWorld {
 - 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
 ```
 MIDDLEWARE_DEMO(
-            "demoJar",
-            "com.xiaomiyoupin.HelloWorld",
+            "demoJar",//随便取个名字
+            "com.xiaomiyoupin.HelloWorld",//启动类全面
             new String[] {
-                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",
-                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"
+                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",//中间件自身
+                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"//依赖
             }
     );
 ```
