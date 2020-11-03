@@ -21,7 +21,7 @@ public class HelloWorld implements IHelloWorld {
 - 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,当然也可以放在本地磁盘或者resources下
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没有打包成jar包,pandora-demo遵循最少依赖原则
 可选依赖cglib和asm，无其他依赖）
-- 4.增加middleware-demo中间件的配置,依赖的gson的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
+- 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
 ```
 MIDDLEWARE_DEMO(
             "demoJar",
@@ -32,10 +32,10 @@ MIDDLEWARE_DEMO(
             }
     );
 ```
-- 5.在spring容器启动前执行。PandoraApplicationContext.run();
-- 6.PandoraApplicationContext.run()的时候动态的去金山云 加载了gson-2.8.6，完全脱离maven的束缚
+- 5.在spring容器启动前执行:PandoraApplicationContext.run();
+- 6.PandoraApplicationContext.run()的时候会读取上一步的配置，然后动态的去金山云 加载gson-2.8.6.jar，完全脱离maven的束缚
 - 7.按照下面的三行代码直接调用middleware-demo中的类 HelloWorld.echo()方法，可以看到成功使用了gson-2.8.6...
-也就是说gson冲突的问题就没有了，项目的gson-5.0.0不会受到影响...
+也就是说gson冲突的问题就没有了，项目中依赖gson-5.0.0的中间件也不会受到影响...
 ```$java
 Object object = PandoraApplicationContext.getObject(HelloWorld.class);
 HelloWorld proxyObject = CglibProxy.getProxyObject(object,HelloWorld.class);
