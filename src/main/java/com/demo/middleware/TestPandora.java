@@ -40,9 +40,12 @@ public class TestPandora {
         Method m = object.getClass().getDeclaredMethod("echo", String.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
-        //cglib生成代理类
+        //cglib生成代理类，执行成功
+        // 如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
         HelloWorld proxyObject = (HelloWorld) CglibProxy.getProxyObject(object);
         System.out.println("代理对象执行："+proxyObject.echo("Hello cglib"));
+
+
 
         //TODO  尝试通过接口来强引用 对象。发现类型不同
 //        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
