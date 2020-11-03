@@ -1,15 +1,15 @@
 ## 介绍
 pandora-demo提供了动态加载jar包的功能，
-并且InnerJarsEnum中每个对象都生成一个自定义的classloader来加载相关的jar包。
+并且为InnerJarsEnum中每个枚举对象都生成一个自定义的classloader（例：JarLauncher）来加载相关的jar包。
 通过类加载器隔离实现中间件依赖与业务代码依赖隔离，中间件与中间件依赖隔离
 
 * 1.把需要的jar放在云端，在InnerJarsEnum配置好中间件源码包的路径，以及中间件依赖（以gson为例）的路径
-* 2.新建URLclassloader对象（例：JarLauncher）去加载云端的jar包，首先加载的时mainClass
+* 2.新建URLclassloader对象（例：JarLauncher）去加载云端的jar包，首先加载的是mainClass
 * 3.反射new 出mainClass对象(例：HelloWorld对象)，泛化调用对象的方法。
 * 4.泛化调用有所局限性，所以可以使用cglib生成代理对象，调用代理对象
 的方法时，会去反射执行目标对象的方法，但是这样业务代码又必须要依赖cglib和中间件
-源码（比如需要直接引入middleware1.0 但是不直接依赖gson）
-* 5.cglib生成的代理对象可以手动加入spring单例池等，和spring结合，使依赖隔离对程序员无感
+源码（比如需要直接引入middleware1.0 但是不需要引入gson依赖）
+* 5.cglib生成的代理对象可以交给spring管理，和spring结合，使依赖隔离对程序员无感
 
 
 ### 各个包的解释
