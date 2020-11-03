@@ -24,14 +24,18 @@ pandora-demo提供了动态加载jar包的功能，
 
 ### 编译安装
 
+把HelloWorld.class相关的报错都注释调，直接在TestPandora例子中反射执行HelloWorld的echo方法。
+如果要使用代理，参照以下步骤：
 ```
-见pom.xml
-从云端 下载demo需要的jar包 http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
-通过<scope>system</scope> 引入jar包
-```
+1.见pom.xml
+2.从云端 下载demo需要的jar包 http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
+3.通过<scope>system</scope> 引入jar包
 
-然后就可以使用TestPandora跑起来了，可以debug看到，jar包加载和运行过程。
 ```
+然后就可以使用TestPandora跑起来了，可以debug看到，jar包加载和运行过程。
+
+```
+不建议尝试：
 通过rpc泛化调用
 1.注册这个 PandoraRpcServer  @Bean
     public ServletRegistrationBean middleTierServiceServlet() {
