@@ -25,10 +25,10 @@ public class HelloWorld implements IHelloWorld {
 ```
 MIDDLEWARE_DEMO(
             "demoJar",//随便取个名字
-            "com.xiaomiyoupin.HelloWorld",//启动类全面
+            "com.xiaomiyoupin.HelloWorld",//启动类全名
             new String[] {
-                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",//中间件自身
-                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"//依赖
+                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",//middleware-demo中间件自身
+                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"//gson-2.8.6依赖
             }
     );
 ```
