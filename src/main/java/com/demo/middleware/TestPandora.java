@@ -42,7 +42,7 @@ public class TestPandora {
 
         //cglib生成代理类
         HelloWorld proxyObject = (HelloWorld) CglibProxy.getProxyObject(object);
-        System.out.println(proxyObject.echo("Hello cglib"));
+        System.out.println("代理对象执行："+proxyObject.echo("Hello cglib"));
 
         //TODO  尝试通过接口来强引用 对象。。调试失败
         Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
