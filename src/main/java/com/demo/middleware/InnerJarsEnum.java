@@ -1,13 +1,13 @@
 package com.demo.middleware;
 
-
 public enum InnerJarsEnum {
 
     MIDDLEWARE_DEMO(
             "demoJar",
             "com.xiaomiyoupin.HelloWorld",
             new String[] {
-                    "http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar",
+                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",
+                    //老版本 "http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar",
                     "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"
             }
     );

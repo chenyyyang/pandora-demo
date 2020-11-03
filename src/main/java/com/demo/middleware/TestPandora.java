@@ -2,13 +2,9 @@ package com.demo.middleware;
 
 import com.demo.middleware.core.PandoraApplicationContext;
 import com.demo.middleware.decorator.CglibProxy;
-import com.demo.middleware.decorator.DynamicProxy;
-import com.demo.middleware.decorator.HelloWorldWrapper;
 import com.xiaomiyoupin.HelloWorld;
-import com.xiaomiyoupin.IHelloWorld;
 
 import java.lang.reflect.Method;
-import java.util.concurrent.CountDownLatch;
 
 public class TestPandora {
 
@@ -44,19 +40,15 @@ public class TestPandora {
         Method m = object.getClass().getDeclaredMethod("echo", String.class);
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
-        //这里成功了，打算用装饰模式，来避免每个方法都用反射
-        HelloWorldWrapper helloWorldWrapper = new HelloWorldWrapper(mainClass);
-        System.out.println("测试输出："+ helloWorldWrapper.echo("hello"));
-
+        //cglib生成代理类
+        HelloWorld proxyObject = (HelloWorld) CglibProxy.getProxyObject(object);
+        System.out.println(proxyObject.echo("Hello cglib"));
 
         //TODO  尝试通过接口来强引用 对象。。调试失败
         Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
         System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
         HelloWorld helloWorld = (HelloWorld) helloWorldObj;
 
-        //TODO  尝试使用JDK动态代理   失败....
-        IHelloWorld proxy = (IHelloWorld) DynamicProxy.getProxy(object);
-        System.out.println(proxy.echo("yes"));
 
         //TODO  使用rpc方式 http://localhost:8080/middleware/HelloWorld/echo?params=hah;  m.invoke(object, new Object[] {s})反射执行。
         //https://www.coder.work/article/6385901
