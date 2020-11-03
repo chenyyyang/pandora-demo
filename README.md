@@ -11,13 +11,13 @@ public class HelloWorld implements IHelloWorld {
     }
 ```
 <br>
-然后发现middleware-demo居然要依赖gson-2.8.6，而我的项目pom中另一个中间件
+然后发现middleware-demo 居然要依赖gson-2.8.6(不然也没法执行echo方法呀)，而我的项目pom中另一个中间件
 也依赖gson，版本是5.0.0...版本差的有点多...<br>
 尝试使用<exclude>排除掉middleware-demo中的gson依赖,直接用gson-5.0.0，发现middleware-demo就抛异常了...NoSuchMethodError（此处假设gson-5.0.0中toJson方法名字改掉了）。
 怎么办呢，又不想去排除掉现在稳定的gson-5.0.0。
 
 ### 问题解决
-- 1.还是排除掉middleware-demo中的gson依赖，现在middleware-demo肯定是用不起来了
+- 1.还是在业务项目pom中排除掉middleware-demo中的gson依赖，现在middleware-demo肯定是用不起来了
 - 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,当然也可以放在本地磁盘或者resources下
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没用打包成jar包,本项目可选依赖cglib和asm，无其他依赖）
 - 4.增加middleware-demo中间件的配置,依赖的地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
