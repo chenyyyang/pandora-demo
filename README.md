@@ -1,4 +1,49 @@
-## 介绍
+### 问题引入
+我们平时的开发中经常要引入各种sdk，现在我希望在代码中引入[middleware-demo](http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar)
+,你可以把这个demo 看作是MQ 的sdk,echo方法看成是MQ的send方法，功能就是输出序列化好的字符串...
+```
+public class HelloWorld implements IHelloWorld {
+   
+    public String echo(String param) {
+        HashMap map = new HashMap();
+        map.put("echoSuccess", param);
+        return (new Gson()).toJson(map);
+    }
+```
+<br>
+然后发现middleware-demo居然要依赖gson-2.8.6，而我的项目pom中另一个中间件
+也依赖gson，版本是5.0.0...版本差的有点多...<br>
+尝试使用<exclude>排除掉middleware-demo中的gson依赖,直接用gson-5.0.0，发现middleware-demo就抛异常了...NoSuchMethodError（此处假设gson-5.0.0中toJson方法名字改掉了）。
+怎么办呢，又不想去排除掉现在稳定的gson-5.0.0。
+
+### 问题解决
+- 1.还是排除掉middleware-demo中的gson依赖，现在middleware-demo肯定是用不起来了
+- 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,当然也可以放在本地磁盘或者resources下
+- 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没用打包成jar包,本项目可选依赖cglib和asm，无其他依赖）
+- 4.增加middleware-demo中间件的配置,依赖的地址、启动类的全名（com.xiaomiyoupin.HelloWorld）
+```
+MIDDLEWARE_DEMO(
+            "demoJar",
+            "com.xiaomiyoupin.HelloWorld",
+            new String[] {
+                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",
+                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"
+            }
+    );
+```
+- 5.在spring容器启动前执行。PandoraApplicationContext.run();
+- 6.PandoraApplicationContext.run()的时候动态的去金山云 加载了gson-2.8.6，完全脱离maven的束缚
+- 7.按照下面的三行代码直接调用middleware-demo中的类 HelloWorld.echo()方法，可以看到成功使用了gson-2.8.6...
+也就是说gson冲突的问题就没有了，项目的gson-5.0.0不会受到影响...
+```$java
+Object object = PandoraApplicationContext.getObject(HelloWorld.class);
+HelloWorld proxyObject = CglibProxy.getProxyObject(object,HelloWorld.class);
+System.out.println("代理对象执行："+proxyObject.echo("Hello cglib"));
+```
+- 8.由于是demo阶段，还没有把对象直接交给spring容器。直接把代理对象交给spring容器就更方便了。
+且pandra-demo中可以引入更多的middleware，中间件与中间件之间也是互不影响的。
+
+### 原理介绍
 pandora-demo提供了动态加载jar包的功能，
 并且为InnerJarsEnum中每个枚举对象都生成一个自定义的classloader（例：JarLauncher）来加载相关的jar包。
 通过类加载器隔离实现中间件依赖与业务代码依赖隔离，中间件与中间件依赖隔离
