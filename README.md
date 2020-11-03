@@ -20,7 +20,7 @@ public class HelloWorld implements IHelloWorld {
 - 1.还是排除掉middleware-demo中的gson依赖，现在middleware-demo肯定是用不起来了
 - 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,当然也可以放在本地磁盘或者resources下
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没用打包成jar包,本项目可选依赖cglib和asm，无其他依赖）
-- 4.增加middleware-demo中间件的配置,依赖的地址、启动类的全名（com.xiaomiyoupin.HelloWorld）
+- 4.增加middleware-demo中间件的配置,依赖的地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
 ```
 MIDDLEWARE_DEMO(
             "demoJar",
