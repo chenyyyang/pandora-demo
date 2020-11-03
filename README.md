@@ -17,7 +17,7 @@ public class HelloWorld implements IHelloWorld {
 怎么办呢，又不想去排除掉现在稳定的gson-5.0.0。
 
 ### 问题解决
-- 1.还是在业务项目pom中排除掉middleware-demo中的gson依赖，现在middleware-demo肯定是用不起来了
+- 1.还是在业务项目pom中排除掉middleware-demo中的gson-2.8.6依赖，现在middleware-demo肯定是用不起来了,toJson报错NoSuchMethodError
 - 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,当然也可以放在本地磁盘或者resources下
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没有打包成jar包,pandora-demo遵循最少依赖原则
 可选依赖cglib和asm，无其他依赖）
