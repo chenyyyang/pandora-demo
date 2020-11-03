@@ -24,12 +24,13 @@ pandora-demo提供了动态加载jar包的功能，
 
 ### 编译安装
 
-把HelloWorld.class相关的报错都注释调，直接在TestPandora例子中反射执行HelloWorld的echo方法。
-如果要使用代理，参照以下步骤：
+* 1.把HelloWorld.class相关的报错都注释调，直接在TestPandora例子中反射执行com.xiaomiyoupin.HelloWorld的echo方法。
+* 2.如果要使用代理来调用，参照以下步骤：
 ```
-1.见pom.xml
+1.打开pom.xml
 2.从云端 下载demo需要的jar包 http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
 3.通过<scope>system</scope> 引入jar包
+4.执行TestPandora中的例子
 
 ```
 然后就可以使用TestPandora跑起来了，可以debug看到，jar包加载和运行过程。
