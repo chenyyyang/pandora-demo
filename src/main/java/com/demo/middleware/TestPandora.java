@@ -42,7 +42,7 @@ public class TestPandora {
 
         //cglib生成代理类，执行成功
         // 如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
-        HelloWorld proxyObject = (HelloWorld) CglibProxy.getProxyObject(object);
+        HelloWorld proxyObject =  CglibProxy.getProxyObject(object,HelloWorld.class);
         System.out.println("代理对象执行："+proxyObject.echo("Hello cglib"));
 
 
