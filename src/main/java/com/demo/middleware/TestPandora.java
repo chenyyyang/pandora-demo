@@ -44,10 +44,10 @@ public class TestPandora {
         HelloWorld proxyObject = (HelloWorld) CglibProxy.getProxyObject(object);
         System.out.println("代理对象执行："+proxyObject.echo("Hello cglib"));
 
-        //TODO  尝试通过接口来强引用 对象。。调试失败
-        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
-        System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
-        HelloWorld helloWorld = (HelloWorld) helloWorldObj;
+        //TODO  尝试通过接口来强引用 对象。发现类型不同
+//        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
+//        System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
+//        HelloWorld helloWorld = (HelloWorld) helloWorldObj;
 
 
         //TODO  使用rpc方式 http://localhost:8080/middleware/HelloWorld/echo?params=hah;  m.invoke(object, new Object[] {s})反射执行。
