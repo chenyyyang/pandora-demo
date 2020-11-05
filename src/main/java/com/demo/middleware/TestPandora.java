@@ -33,7 +33,7 @@ public class TestPandora {
     private static void cases(boolean flag) throws Exception {
 
         Class mainClass = PandoraApplicationContext.getMainClass(InnerJarsEnum.MIDDLEWARE_DEMO);
-        System.out.println("类加载器是：" + mainClass.getClassLoader());
+        System.out.println(mainClass.getName() + "类加载器是：" + mainClass.getClassLoader());
 
         //泛化调用
         Object object = PandoraApplicationContext.getObject(HelloWorld.class);

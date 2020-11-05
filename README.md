@@ -2,26 +2,27 @@
 我们平时的开发中经常要引入各种sdk，现在我希望在代码中引入[middleware-demo](http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar)
 ,你可以把这个demo 看作是MQ 的sdk,echo方法看成是MQ的send方法，功能就是输出序列化好的字符串...
 ```
-public class HelloWorld implements IHelloWorld {
-   
+public class HelloWorld { 
     public String echo(String param) {
         HashMap map = new HashMap();
         map.put("echoSuccess", param);
-        return (new Gson()).toJson(map);
+        return new Gson().toJson(map);
     }
 ```
 <br>
-然后发现middleware-demo 居然要依赖gson-2.8.6(不然也没法执行echo方法呀)，而我的项目pom中另一个中间件
+然后发现middleware-demo 居然要依赖gson-2.8.6(不然也没法执行echo方法中的序列化呀)，而我的项目pom中另一个中间件
 也依赖gson，版本是5.0.0...版本差的有点多...<br>
 尝试使用<exclude>排除掉middleware-demo中的gson依赖,直接用gson-5.0.0，发现middleware-demo就抛异常了...NoSuchMethodError（此处假设gson-5.0.0中toJson方法名字改掉了）。
 怎么办呢，又不想去排除掉现在稳定的gson-5.0.0。
 
 ### 问题解决
 - 1.还是在业务项目pom中排除掉middleware-demo中的gson-2.8.6依赖，现在middleware-demo肯定是用不起来了,toJson报错ClassNotFound
-- 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,当然也可以放在本地磁盘或者resources下
+- 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,
+当然也可以放在本地磁盘或者resources下，OSGI的实现中就是放在{project}/plugins文件夹下面
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没有打包成jar包,pandora-demo遵循最少依赖原则
 可选依赖cglib和asm，无其他依赖）
 - 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
+一般配置都放配置文件，这边我直接放在InnerJarsEnum枚举类里了。
 ```
 MIDDLEWARE_DEMO(
             "demoJar",//随便取个名字
@@ -33,7 +34,7 @@ MIDDLEWARE_DEMO(
     );
 ```
 - 5.在spring容器启动前执行:PandoraApplicationContext.run();
-- 6.PandoraApplicationContext.run()的时候会读取上一步的配置，然后动态的去金山云 加载gson-2.8.6.jar，完全脱离maven的束缚
+- 6.PandoraApplicationContext.run()的时候会读取上一步（第4步）的配置，然后动态的去金山云 加载gson-2.8.6.jar，完全脱离maven的束缚
 - 7.按照下面的三行代码直接调用middleware-demo中的类 HelloWorld.echo()方法，可以看到成功使用了gson-2.8.6...
 也就是说gson冲突的问题就没有了，项目中依赖gson-5.0.0的中间件也不会受到影响...
 ```$java
@@ -104,5 +105,7 @@ servlet初始化时会把，class和method加载到内存中，等待http调用
 - [深入理解Java虚拟机读书笔记](https://bingoex.github.io/2015/09/17/jvm-book-3-classloader/#%E6%A6%82%E8%BF%B0)
 - [Pandora Boot和spring Boot](https://blog.csdn.net/alex_xfboy/article/details/89531580)
 - [springboot启动时如何加载jar](https://cloud.tencent.com/developer/article/1619027)
+- [OSGI](https://www.cnblogs.com/barrywxx/p/8522152.html)
+- [Java9 模块化](https://developer.ibm.com/zh/articles/the-new-features-of-Java-9/)
 
 
