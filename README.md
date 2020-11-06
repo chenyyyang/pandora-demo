@@ -18,7 +18,7 @@ public class HelloWorld {
 ### 问题解决
 - 1.还是在业务项目pom中排除掉middleware-demo中的gson-2.8.6依赖，现在middleware-demo肯定是用不起来了,toJson报错ClassNotFound
 - 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,
-当然也可以放在本地磁盘或者resources下，OSGI的实现中就是放在{project}/plugins文件夹下面
+当然也可以放在本地磁盘或者resources下，甚至数据库中，OSGI的实现中就是放在{project}/plugins文件夹下面
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没有打包成jar包,pandora-demo遵循最少依赖原则
 可选依赖cglib和asm，无其他依赖）
 - 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
