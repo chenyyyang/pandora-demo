@@ -8,7 +8,7 @@ import java.net.URL;
 
 public class JarLauncherFactory {
 
-    public static JarLauncher getJarLauncher(InnerJarsEnum innerJarsEnum) {
+    public static JarLauncher create(InnerJarsEnum innerJarsEnum) {
         String JarName = innerJarsEnum.getJarName();
         String[] dependcyUrls = innerJarsEnum.getDependcyUrls();
 

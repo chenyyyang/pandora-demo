@@ -27,7 +27,7 @@ public class PandoraApplicationContext {
         //获取所有的待加载的jar
         for (InnerJarsEnum innerJarsEnum : innerJarsEnums) {
             //初始化一个ClassLoader来加载,实现组件与组件之前的隔离
-            JarLauncher jarLauncher = JarLauncherFactory.getJarLauncher(innerJarsEnum);
+            JarLauncher jarLauncher = JarLauncherFactory.create(innerJarsEnum);
             classLoaderHolder.put(innerJarsEnum.getJarName(), jarLauncher);
         }
         //加载Class
