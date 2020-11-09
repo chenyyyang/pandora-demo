@@ -107,5 +107,6 @@ servlet初始化时会把，class和method加载到内存中，等待http调用
 - [springboot启动时如何加载jar](https://cloud.tencent.com/developer/article/1619027)
 - [OSGI](https://www.cnblogs.com/barrywxx/p/8522152.html)
 - [Java9 模块化](https://developer.ibm.com/zh/articles/the-new-features-of-Java-9/)
+- [Oracle 虚拟机规范- 加载 验证 准备 解析](https://docs.oracle.com/javase/specs/jls/se8/html/jls-12.html#jls-12.3)
 
 

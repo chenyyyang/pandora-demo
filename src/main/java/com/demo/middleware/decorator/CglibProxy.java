@@ -14,7 +14,7 @@ public class CglibProxy  {
             @Override
             public Object invoke(Object proxy, Method method, Object[] objects) throws Throwable {
 
-                System.out.println("[执行代理方法]...被代理对象的classloader -->" + target.getClass().getClassLoader());
+                System.out.println("[执行代理方法"+method.getName()+"]...被代理对象的classloader -->" + target.getClass().getClassLoader());
                 Method declaredMethod = target.getClass().getDeclaredMethod(method.getName(), method.getReturnType());
                 return declaredMethod.invoke(target, objects);
             }
