@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 
 public class CglibProxy  {
 
-    public static <T> T getProxyObject(Object target, Class<T> clz) {
+    public static <T> T create(Object target, Class<T> clz) {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(clz);
         enhancer.setCallback(new InvocationHandler() {

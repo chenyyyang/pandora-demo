@@ -2,7 +2,9 @@ package com.demo.middleware;
 
 import com.demo.middleware.core.PandoraApplicationContext;
 import com.demo.middleware.decorator.CglibProxy;
+import com.demo.middleware.decorator.JDKDynamicProxy;
 import com.xiaomiyoupin.HelloWorld;
+import com.xiaomiyoupin.IHelloWorld;
 
 import java.lang.reflect.Method;
 
@@ -42,9 +44,11 @@ public class TestPandora {
 
         //cglib生成代理类，执行成功
         // 如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
-        HelloWorld proxyObject = CglibProxy.getProxyObject(object, HelloWorld.class);
-        System.out.println("代理对象执行：" + proxyObject.echo("Hello cglib"));
+        HelloWorld proxyObject = CglibProxy.create(object, HelloWorld.class);
+        System.out.println("代理对象执行：" + proxyObject.echo("Hello CglibProxy"));
 
+        IHelloWorld o = (IHelloWorld) JDKDynamicProxy.create(object,IHelloWorld.class);
+        System.out.println("代理对象执行：" + o.echo("Hello JDK-DynamicProxy"));
         //TODO  尝试通过接口来强引用 对象。发现类型不同
 //        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
 //        System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
