@@ -43,17 +43,18 @@ public class TestPandora {
         System.out.println("成功执行返回值：" + m.invoke(object, new Object[] {"test"}));
 
         //cglib生成代理类，执行成功
-        // 如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
         HelloWorld proxyObject = CglibProxy.create(object, HelloWorld.class);
-        System.out.println("代理对象执行：" + proxyObject.echo("Hello CglibProxy"));
+        System.out.println("CglibProxy代理对象执行：" + proxyObject.echo("Hello CglibProxy"));
 
-        IHelloWorld o = (IHelloWorld) JDKDynamicProxy.create(object,IHelloWorld.class);
-        System.out.println("代理对象执行：" + o.echo("Hello JDK-DynamicProxy"));
+        IHelloWorld o = JDKDynamicProxy.create(object, IHelloWorld.class);
+        System.out.println("JDKDynamicProxy代理对象执行：" + o.echo("Hello JDK-DynamicProxy"));
+
         //TODO  尝试通过接口来强引用 对象。发现类型不同
 //        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
 //        System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
 //        HelloWorld helloWorld = (HelloWorld) helloWorldObj;
 
+        // 如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
 //        HelloWorld helloWorld = new HelloWorld();
 //        helloWorld.echo("throw e");
 

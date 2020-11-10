@@ -10,9 +10,9 @@ import java.lang.reflect.Proxy;
  */
 public class JDKDynamicProxy {
 
-    public static Object create(Object target, Class clz) {
+    public static <T> T create(Object target, Class<T> clz) {
 
-        Object obj = Proxy.newProxyInstance(clz.getClassLoader(),new  Class[]{clz}, new InvocationHandler() {
+        Object obj = Proxy.newProxyInstance(clz.getClassLoader(), new Class[] {clz}, new InvocationHandler() {
 
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -21,7 +21,7 @@ public class JDKDynamicProxy {
                 return declaredMethod.invoke(target, args);
             }
         });
-        return obj;
+        return (T) obj;
     }
 
 }
