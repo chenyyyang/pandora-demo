@@ -1,5 +1,7 @@
 package com.demo.middleware;
 
+import com.demo.middleware.core.JarLauncher;
+import com.demo.middleware.core.JarLauncherFactory;
 import com.demo.middleware.core.PandoraApplicationContext;
 import com.demo.middleware.decorator.CglibProxy;
 import com.demo.middleware.decorator.JDKDynamicProxy;
@@ -11,28 +13,13 @@ import java.lang.reflect.Method;
 public class TestPandora {
 
     public static void main(String[] args) throws Exception {
-  /*
-    IHelloWorld object = PandoraApplicationContext.getObject(HelloWorld.class);
-    抛出异常：
-    Exception in thread "main" java.lang.ClassCastException:
-        com.xiaomiyoupin.HelloWorld cannot be cast to com.xiaomiyoupin.HelloWorld
-        at com.xiaomiyoupin.middleware.测试类.main(测试类.java:15)
-
-解答：https://developer.aliyun.com/article/710407
-
-每个ClassLoader都有一个 Dictionary 用来保存它所加载的InstanceKlass信息。
-并且，每个 ClassLoader 通过锁，保证了对于同一个Class，它只会注册一份 InstanceKlass 到自己的 Dictionary 。
-正式由于上面这些原因，如果所有的 ClassLoader 都由自己去加载 Class 文件
-就会导致对于同一个Class文件，存在多份InstanceKlass，所以即使是同一个Class文件，
-不同InstanceKlasss 衍生出来的实例类型也是不一样的。
-        */
-        PandoraApplicationContext.run();
-
-        cases(false);
-
+//        case1(false);
+        case2();
     }
 
-    private static void cases(boolean flag) throws Exception {
+    private static void case1(boolean flag) throws Exception {
+
+        PandoraApplicationContext.run();
 
         Class mainClass = PandoraApplicationContext.getMainClass(InnerJarsEnum.MIDDLEWARE_DEMO);
         System.out.println(mainClass.getName() + "类加载器是：" + mainClass.getClassLoader());
@@ -46,17 +33,31 @@ public class TestPandora {
         HelloWorld proxyObject = CglibProxy.create(object, HelloWorld.class);
         System.out.println("CglibProxy代理对象执行：" + proxyObject.echo("Hello CglibProxy"));
 
-        IHelloWorld o = JDKDynamicProxy.create(object, IHelloWorld.class);
-        System.out.println("JDKDynamicProxy代理对象执行：" + o.echo("Hello JDK-DynamicProxy"));
+        IHelloWorld wrapper = JDKDynamicProxy.create(object, IHelloWorld.class);
+        System.out.println("JDKDynamicProxy代理对象执行：" + wrapper.echo("Hello JDK-DynamicProxy"));
 
         //TODO  尝试通过接口来强引用 对象。发现类型不同
-//        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
-//        System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
-//        HelloWorld helloWorld = (HelloWorld) helloWorldObj;
+        Object helloWorldObj = PandoraApplicationContext.getObject(HelloWorld.class);
+        System.out.println("类加载器是：" + helloWorldObj.getClass().getClassLoader());
+        HelloWorld helloWorld = (HelloWorld) helloWorldObj;
 
-        // 如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
+//         如果时appClassloader加载的HelloWorld对象，会因为缺少gson依赖而报错
 //        HelloWorld helloWorld = new HelloWorld();
 //        helloWorld.echo("throw e");
+         /*
+    IHelloWorld object = PandoraApplicationContext.getObject(HelloWorld.class);
+    抛出异常：
+    Exception in thread "main" java.lang.ClassCastException:
+        com.xiaomiyoupin.HelloWorld cannot be cast to com.xiaomiyoupin.HelloWorld
+        at com.xiaomiyoupin.middleware.测试类.main(测试类.java:15)
+
+解答：https://developer.aliyun.com/article/710407
+
+对于任何一个类  必须由加载它的类加载器和类本身  共同确立其在虚拟机中的唯一性
+
+每个类加载器都拥有一个独立的类名称空间。比较两个类是否相等(equal()  instanceof)只有当
+两个类是同一个类加载器加载的时候才有意义。肯定也无法转化，就会抛出ClassCastException
+        */
 
         //TODO  使用rpc方式 http://localhost:8080/middleware/HelloWorld/echo?params=hah;  m.invoke(object, new Object[] {s})反射执行。
         //https://www.coder.work/article/6385901
@@ -79,6 +80,19 @@ public class TestPandora {
             thread.start();
             new CountDownLatch(1).await();
         }*/
+
+        //TODO java SPI (Service Provider Interface) ，是JDK内置的一种服务提供发现机制
+
     }
 
+    private static void case2() throws Exception {
+
+        JarLauncher jarLauncher = JarLauncherFactory.create(InnerJarsEnum.MIDDLEWARE_DEMO);
+
+        Class<?> mainClass = jarLauncher.loadClass(InnerJarsEnum.MIDDLEWARE_DEMO.getMainClass());
+
+        HelloWorld proxyObject = CglibProxy.create(mainClass.newInstance(), HelloWorld.class);
+
+        System.out.println("case2 代理对象执行：" + proxyObject.echo("Hello case2"));
+    }
 }

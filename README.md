@@ -18,7 +18,7 @@ public class HelloWorld {
 ### 问题解决
 - 1.还是在业务项目pom中排除掉middleware-demo中的gson-2.8.6依赖，现在middleware-demo肯定是用不起来了,toJson报错ClassNotFound
 - 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,
-当然也可以放在本地磁盘或者resources下，甚至数据库中，OSGI的实现中就是放在{project}/plugins文件夹下面
+当然也可以放在本地磁盘上或者项目resources下，甚至数据库或者gitlab上面，OSGI的实现有很多种，其中就有{project}/plugins文件夹下面
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没有打包成jar包,pandora-demo遵循最少依赖原则
 可选依赖cglib和asm，无其他依赖）
 - 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
@@ -33,7 +33,7 @@ MIDDLEWARE_DEMO(
             }
     );
 ```
-- 5.在spring容器启动前执行:PandoraApplicationContext.run();
+- 5.在项目启动前执行:PandoraApplicationContext.run();
 - 6.PandoraApplicationContext.run()的时候会读取上一步（第4步）的配置，然后动态的去金山云 加载gson-2.8.6.jar，完全脱离maven的束缚
 - 7.按照下面的三行代码直接调用middleware-demo中的类 HelloWorld.echo()方法，可以看到成功使用了gson-2.8.6...
 也就是说gson冲突的问题就没有了，项目中依赖gson-5.0.0的中间件也不会受到影响...
@@ -64,7 +64,7 @@ pandora-demo提供了动态加载jar包的功能，
 
 | 包名               |     介绍                                                                          |
 | -------------------|---------------------------------------------------------------------------------- |
-| core         |    启动过程方法以及所需要的 classloader                                              |
+| core         |    启动过程方法以及 通过枚举类来定义 classloader                                              |
 | decorater |     通过代理来调用对象的方法，不用可以注释掉...                                               |
 |rpc.http      |     通过rpc以及泛化调用来调用对象的方法，不用可以注释掉...                                                                     |                                                |
 | InnerJarsEnum | 存放一些示例jar包，以及jar包对应的依赖，mainClass是jar包中一个被加载的类|
@@ -107,6 +107,6 @@ servlet初始化时会把，class和method加载到内存中，等待http调用
 - [springboot启动时如何加载jar](https://cloud.tencent.com/developer/article/1619027)
 - [OSGI](https://www.cnblogs.com/barrywxx/p/8522152.html)
 - [Java9 模块化](https://developer.ibm.com/zh/articles/the-new-features-of-Java-9/)
-- [Oracle 虚拟机规范- 加载 验证 准备 解析](https://docs.oracle.com/javase/specs/jls/se8/html/jls-12.html#jls-12.3)
-
+- [Oracle 虚拟机规范- 加载 验证 准备 解析](https://docs.oracle.com/javase/specs/jls/se8/html/jls-12.html#jls-12.1.2)
+- [idea自动执行toString](https://stackoverflow.com/questions/11189708/is-it-possible-to-tell-intellij-idea-to-automatically-invoke-tostring-on-the-o)
 
