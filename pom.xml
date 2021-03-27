@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.xiaomiyoupin.middleware</groupId>
+    <groupId>com.hahaha.middleware</groupId>
     <artifactId>pandora-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <!--http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
+        <!--http://res.hahahahhhhh.hah-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
         点击下载即可..然后放到systemPath参数上-->
         <dependency>
-            <groupId>com.xiaomiyoupin</groupId>
+            <groupId>com.hahaha</groupId>
             <artifactId>middleware-demo</artifactId>
             <version>1.0-SNAPSHOT</version>
             <optional>true</optional>

@@ -1,5 +1,5 @@
 ### 问题引入
-我们平时的开发中经常要引入各种sdk，现在我希望在代码中引入[middleware-demo](http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar)
+我们平时的开发中经常要引入各种sdk，现在我希望在代码中引入[middleware-demo](http://res.hahahahhhhh.hah-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar)
 ,你可以把这个demo 看作是MQ 的sdk,echo方法看成是MQ的send方法，功能就是输出序列化好的字符串...
 ```
 public class HelloWorld { 
@@ -17,19 +17,19 @@ public class HelloWorld {
 
 ### 问题解决
 - 1.还是在业务项目pom中排除掉middleware-demo中的gson-2.8.6依赖，现在middleware-demo肯定是用不起来了,toJson报错ClassNotFound
-- 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar ,
+- 2.把gson-2.8.6上传到金山云对象存储上,得到 [url]:http://res.hahahahhhhh.hah-img.com/test_upload/gson-2.8.6.jar ,
 当然也可以放在本地磁盘上或者项目resources下，甚至数据库或者gitlab上面，OSGI的实现有很多种，其中就有{project}/plugins文件夹下面
 - 3.在业务项目中加入本项目（pandora-demo）源码（因为还在demo阶段...没有打包成jar包,pandora-demo遵循最少依赖原则
 可选依赖cglib和asm，无其他依赖）
-- 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.xiaomiyoupin.HelloWorld）
+- 4.增加middleware-demo中间件的配置,依赖的gson-2.8.6的云端地址（第2步得到的...）、启动类的全名（com.hahaha.HelloWorld）
 一般配置都放配置文件，这边我直接放在InnerJarsEnum枚举类里了。
 ```
 MIDDLEWARE_DEMO(
             "demoJar",//随便取个名字
-            "com.xiaomiyoupin.HelloWorld",//启动类全名
+            "com.hahaha.HelloWorld",//启动类全名
             new String[] {
-                    "http://res.youpin.mi-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",//middleware-demo中间件自身
-                    "http://res.youpin.mi-img.com/test_upload/gson-2.8.6.jar"//gson-2.8.6依赖
+                    "http://res.hahahahhhhh.hah-img.com/test_upload/middleware-demo-1.0-SNAPSHOT.jar",//middleware-demo中间件自身
+                    "http://res.hahahahhhhh.hah-img.com/test_upload/gson-2.8.6.jar"//gson-2.8.6依赖
             }
     );
 ```
@@ -72,11 +72,11 @@ pandora-demo提供了动态加载jar包的功能，
 
 ### 编译安装
 
-* 1.把HelloWorld.class相关的报错都注释调，直接在TestPandora例子中反射执行com.xiaomiyoupin.HelloWorld的echo方法。
+* 1.把HelloWorld.class相关的报错都注释调，直接在TestPandora例子中反射执行com.hahaha.HelloWorld的echo方法。
 * 2.如果要使用代理来调用，参照以下步骤：
 ```
 1.打开pom.xml
-2.从云端 下载demo需要的jar包 http://res.youpin.mi-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
+2.从云端 下载demo需要的jar包 http://res.hahahahhhhh.hah-img.com/test_upload/middleware-1.0-SNAPSHOT.jar
 3.通过<scope>system</scope> 引入jar包
 4.执行TestPandora中的例子
 

@@ -5,8 +5,8 @@ import com.demo.middleware.core.JarLauncherFactory;
 import com.demo.middleware.core.PandoraApplicationContext;
 import com.demo.middleware.decorator.CglibProxy;
 import com.demo.middleware.decorator.JDKDynamicProxy;
-import com.xiaomiyoupin.HelloWorld;
-import com.xiaomiyoupin.IHelloWorld;
+import com.hahaha.HelloWorld;
+import com.hahaha.IHelloWorld;
 
 import java.lang.reflect.Method;
 
@@ -48,8 +48,8 @@ public class TestPandora {
     IHelloWorld object = PandoraApplicationContext.getObject(HelloWorld.class);
     抛出异常：
     Exception in thread "main" java.lang.ClassCastException:
-        com.xiaomiyoupin.HelloWorld cannot be cast to com.xiaomiyoupin.HelloWorld
-        at com.xiaomiyoupin.middleware.测试类.main(测试类.java:15)
+        com.hahaha.HelloWorld cannot be cast to com.hahaha.HelloWorld
+        at com.hahaha.middleware.测试类.main(测试类.java:15)
 
 解答：https://developer.aliyun.com/article/710407
 
