@@ -101,6 +101,7 @@ servlet初始化时会把，class和method加载到内存中，等待http调用
 ```
 
 ### 资料和引用
+- [如何实现jar包隔离](http://www.shop988.com/blog/%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0jar%E5%8C%85%E9%9A%94%E7%A6%BB.html)
 - [类容器隔离组件源码浅析](https://bingoex.github.io/2018/01/01/pandora/)
 - [深入理解Java虚拟机读书笔记](https://bingoex.github.io/2015/09/17/jvm-book-3-classloader/#%E6%A6%82%E8%BF%B0)
 - [Pandora Boot和spring Boot](https://blog.csdn.net/alex_xfboy/article/details/89531580)
